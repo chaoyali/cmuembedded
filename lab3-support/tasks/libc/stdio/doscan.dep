@@ -1,0 +1,20 @@
+/home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/stdio/doscan.o:  \
+ /home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/stdio/doscan.c \
+  /home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/stdarg.h \
+  /home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/sys/types.h \
+  /home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/bits/types.h \
+  /home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/ctype.h \
+  /home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/inline.h \
+  /home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/stdio/doscan.h
+
+/home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/stdarg.h:
+
+/home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/sys/types.h:
+
+/home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/bits/types.h:
+
+/home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/ctype.h:
+
+/home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/inline.h:
+
+/home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/stdio/doscan.h:

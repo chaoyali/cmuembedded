@@ -1,0 +1,14 @@
+/home/chaoya/Documents/18342/lab3/lab3-support/kernel/raise.o:  \
+ /home/chaoya/Documents/18342/lab3/lab3-support/kernel/raise.c \
+  /home/chaoya/Documents/18342/lab3/lab3-support/uboot/include/exports.h \
+  /home/chaoya/Documents/18342/lab3/lab3-support/kernel/include/types.h \
+  /home/chaoya/Documents/18342/lab3/lab3-support/kernel/include/stdarg.h \
+  /home/chaoya/Documents/18342/lab3/lab3-support/uboot/include/_exports.h
+
+/home/chaoya/Documents/18342/lab3/lab3-support/uboot/include/exports.h:
+
+/home/chaoya/Documents/18342/lab3/lab3-support/kernel/include/types.h:
+
+/home/chaoya/Documents/18342/lab3/lab3-support/kernel/include/stdarg.h:
+
+/home/chaoya/Documents/18342/lab3/lab3-support/uboot/include/_exports.h:

@@ -1,0 +1,12 @@
+ \
+ /home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/string/strncmp.o:  \
+ /home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/string/strncmp.c \
+  /home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/string.h \
+  /home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/sys/types.h \
+  /home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/bits/types.h
+
+/home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/string.h:
+
+/home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/sys/types.h:
+
+/home/chaoya/Documents/18342/lab3/lab3-support/tasks/libc/include/bits/types.h:

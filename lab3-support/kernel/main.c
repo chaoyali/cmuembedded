@@ -14,8 +14,10 @@ void swi_handler();
 void irq_handler();
 int load_user();
 void C_SWI_handler(unsigned swi_num, unsigned *regs);
-ssize_t write(int fd, const void *buf, size_t count);
-ssize_t read(int fd, void *buf, size_t count);
+extern ssize_t write(int fd, const void *buf, size_t count);
+extern ssize_t read(int fd, void *buf, size_t count);
+extern void init_interrupt(void);
+extern void init_timer0(void);
 void restore_handler(unsigned int *vector, unsigned *old_instr1, unsigned *old_instr2);
 void install_handler(unsigned int *vector, int handler, unsigned *old_instr1, unsigned *old_instr2);
 
@@ -34,6 +36,9 @@ int kmain(int argc, char* argv[], uint32_t table) {
 	//install the irq custom handler
 	install_handler((unsigned int*)0x18, (int)irq_handler, old_instr_irq_1, old_instr_irq_2);
 
+	//initiate the interrupt and timer 0
+	init_interrupt();
+	init_timer0();
 	//load user program	
 	exit_num = load_user(argc, argv);
 
@@ -94,69 +99,7 @@ void C_SWI_handler(unsigned swi_num, unsigned *regs){
 	}
 }
 
-ssize_t write(int fd, const void *buf, size_t count) {
-
-	unsigned i;
-
-	//check the fd	
-	if (fd != 1)
-		return -EBADF;
-
-	//check whether the buf is in ROM/SDRAM
-	if (((unsigned)&buf < (unsigned)0xa0000000) || (((unsigned)&buf + count) > (unsigned)0xa3ffffff) ||
-	     (((unsigned)&buf + count) < (unsigned)0x00ffffff))
-		return -EFAULT;
-	
-	//write
-	for(i = 0; i < count; i++) {
-		if (((char*)buf)[i] == '\0'){
-			count++;
-			break;
-		}
-		putc(((char*)buf)[i]);
-	}
-	return count;
+void myprint(){
+	printf("Myprint\n");
 }
 
-ssize_t read(int fd, void *buf, size_t count) {
-	unsigned count_read = 0;	
-	char *read_buf = (char *)buf;
-	
-	//check the fd
-	if(fd != 0) //not STDIN
-		return -EBADF;
-	//check the range of buf
-	if(((unsigned)&buf < (unsigned)0xa0000000)||(((unsigned)&buf + (unsigned)count) > (unsigned)0xa3ffffff))
-		return -EFAULT;	
-	
-	//read
-	while (count_read < count) {
-		if(tstc()) {
-			read_buf[count_read] = getc();
-	
-			//EOT
-			if (read_buf[count_read] == 4) {	//EOT
-				return count_read;
-			}
-			//check \r  \n
-			if (read_buf[count_read] == 10 || read_buf[count_read] == 13) {
-				read_buf[count_read] = 10;
-				putc('\n');
-				count_read ++;
-				return count_read;
-
-			}
-			//check the backspace and delete
-			if (read_buf[count_read] == 8 || read_buf[count_read] == 127) {
-				count_read --;
-				puts("\b \b");
-				continue;
-
-			}
-			putc(read_buf[count_read]);
-			count_read++;
-		}	
-	}
-	//if buffer full, return here.
-	return count_read;
-}

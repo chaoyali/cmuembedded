@@ -17,7 +17,7 @@ load_user:
 	@swich to user mode with IRQs & FIQs masked.
 	MRS	r2, cpsr
 	BIC	r2, #0xff
-	ORR	r2, #0xd0
+	ORR	r2, #0x50
 	MSR	cpsr, r2
 
 	@set user mode stack	

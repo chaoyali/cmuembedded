@@ -12,11 +12,9 @@ irq_handler:
 
 	STMFD	sp!, {r0-r12, lr}
 	MOV	r1, sp
-
-
-
+@	BL myprint
 	@go c handler to dispatch appropriate syscall
-@	BL	C_SWI_handler
+	BL	C_IRQ_handler
 
 	@retore non-banked user space registers
 	LDMFD	sp!, {r0-r12, lr}

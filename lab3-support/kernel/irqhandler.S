@@ -1,12 +1,12 @@
 	@author: Chaoya Li <chaoyal@andrew.cmu.edu>
 	@This is a swi handler. I can parse the swi number
 	@and call the C_swi_handler to dispatch the handler
-	.file	"swihandler.S"
+	.file	"irqhandler.S"
 	.text
 
-	.global swi_handler
+	.global irq_handler
 
-swi_handler:
+irq_handler:
 
 
 

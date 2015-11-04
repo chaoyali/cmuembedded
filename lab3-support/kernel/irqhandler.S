@@ -1,5 +1,5 @@
 @ author: Chaoya Li <chaoyal@andrew.cmu.edu>
-@		  Ya Gao <yag1@andrew.cmu.edu>
+@	  Ya Gao <yag1@andrew.cmu.edu>
 @ reference Lec7, ppt 28
 
 	.file	"irqhandler.S"

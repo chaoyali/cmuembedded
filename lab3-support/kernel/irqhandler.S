@@ -1,6 +1,7 @@
-	@author: Chaoya Li <chaoyal@andrew.cmu.edu>
-	@This is a swi handler. I can parse the swi number
-	@and call the C_swi_handler to dispatch the handler
+@ author: Chaoya Li <chaoyal@andrew.cmu.edu>
+@		  Ya Gao <yag1@andrew.cmu.edu>
+@ reference Lec7, ppt 28
+
 	.file	"irqhandler.S"
 	.text
 
@@ -8,16 +9,13 @@
 
 irq_handler:
 
+	STMFD	sp!, {r0-r12, lr}	@ save context
+	MOV	r1, sp	@ r1 now contains pointer to parameters on stack
 
+	@ need to save r8 register?
 
-	STMFD	sp!, {r0-r12, lr}
-	MOV	r1, sp
-@	BL myprint
-	@go c handler to dispatch appropriate syscall
-	BL	C_IRQ_handler
-
-	@retore non-banked user space registers
-	LDMFD	sp!, {r0-r12, lr}
+	BL	C_IRQ_handler	@ go to handler
+	LDMFD	sp!, {r0-r12, lr}	@retore non-banked user space registers
 	
-	MOVS	pc, lr		@It can copy srsr to cpsr
+	SUBS	pc, lr, #4
 

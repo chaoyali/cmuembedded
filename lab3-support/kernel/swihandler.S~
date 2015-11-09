@@ -13,11 +13,6 @@ swi_handler:
 	STMFD	sp!, {r0-r12, lr}
 	MOV	r1, sp
 
-        @ Mask IRQ
-        MRS   r2, cpsr
-        AND   r2, r2, #0xFFFFFF7F
-        MSR   cpsr, r2
-
 	@determine the SWI number called
 	LDR	r0, [lr, #-4]
 	BIC	r0, r0, #0xff000000

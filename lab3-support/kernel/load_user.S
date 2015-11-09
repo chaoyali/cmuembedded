@@ -1,5 +1,6 @@
 	@author: Chaoya Li <chaoyal@andrew.cmu.edu>
-	@This file is used to set the user mode, stack, branch
+	@		 Ya Gao	<yag1@andrew.cmu.edu>
+	@This file is used to set the user mode, stack, branch; irq stack
 	@to user program.
 	.file	"load_user.S"
 	.text
@@ -7,21 +8,29 @@
 	.global load_user
 
 #include <bits/swi.h>
+#include <config.h>
 load_user:
 
 	@save all the register in svc mode
 	STMFD	sp!, {r0-r12, lr}
-	MOV	r2, #0xa2000000
-	STR	sp, [r2]
+	LDR		r2, =ADDR_SP_SAVE
+	STR		sp, [r2]
 
-	@swich to user mode with IRQs & FIQs masked.
+	@ Switch to IRQ mode, set its stack
+	MRS   r2, cpsr
+	AND   r2, r2, #0xFFFFFFF0
+	ORR   r2, r2, #0x2
+	MSR   cpsr, r2
+	MOV   sp, #IRQ_STACK
+
+	@swich to user mode with FIQs masked.
 	MRS	r2, cpsr
 	BIC	r2, #0xff
 	ORR	r2, #0x50
 	MSR	cpsr, r2
 
 	@set user mode stack	
-	MOV	sp, #0xa3000000
+	MOV	sp, #USER_STACK
 
 	@push NULL
 	MOV	r3, #0
@@ -41,7 +50,7 @@ L2:
 	STMFD	sp!, {r0}
 
 	@jump to 0xa0000000
-	MOV	r3, #0xa0000000
+	MOV	r3, #USER_BEGIN
 	BLX	r3
 
 	@exit

@@ -13,8 +13,8 @@
 void init_interrupt(void)
 {
 	//set ICLR to 0, which mean all the interrupt will generat IRQ
-	reg_wirte(INT_ICLR_ADDR, 0);
+	reg_write(INT_ICLR_ADDR, 0);
 	//cleean ICMR, then only enable the OSTimer 0 interrupt
-	reg_clear(INT_ICMR_ADDR, 0);
-	reg_wirte(INT_ICMR_ADDR, 1<<INT_OSTMR_0);
+//	reg_clear(INT_ICMR_ADDR, 0);
+	reg_write(INT_ICMR_ADDR, 1<<INT_OSTMR_0);
 }

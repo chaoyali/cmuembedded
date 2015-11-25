@@ -50,7 +50,7 @@ static void __attribute__((unused)) idle(void)
  * @param size   The number of tasks is the list.
  */
 /*create TCB, put task in runquene, set up TCB for idle task, make idle scheduable*/
-tcb_t tcb[3];
+
 void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
 //Your kernel should have logic of how to assign priority, initial context, etc. task_t contains the minimum information necessary for your kernel to initialize tcb. Document your design decision as comments.
@@ -59,33 +59,33 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 
 	runqueue_init();
 
-	tcb[0].native_prio = 2;
-	tcb[0].cur_prio = 2;
+	system_tcb[1].native_prio = 2;
+	system_tcb[1].cur_prio = 2;
 	//tcb[0].context = (sched_context_t)0;
-	tcb[0].holds_lock = 0;
+	system_tcb[1].holds_lock = 0;
 	//tcb[0].sleep_queue = null;
 
 //	run_list[tcb[0].cur_prio] = &tcb[0];
-	runqueue_add(&tcb[0], tcb[0].cur_prio);
+	runqueue_add(&system_tcb[1], system_tcb[1].cur_prio);
 	//runqueue_add(tcb_t* tcb  __attribute__((unused)), uint8_t prio  __attribute__((unused)))
 
-	tcb[1].native_prio = 3;
-	tcb[1].cur_prio = 3;
+	system_tcb[2].native_prio = 3;
+	system_tcb[2].cur_prio = 3;
 	//tcb[0].context = (sched_context_t)0;
-	tcb[1].holds_lock = 0;
+	system_tcb[2].holds_lock = 0;
 	//tcb[0].sleep_queue = null;
-	runqueue_add(&tcb[1], tcb[1].cur_prio);
+	runqueue_add(&system_tcb[2], system_tcb[2].cur_prio);
 	//run_list[tcb[1].cur_prio] = &tcb[1];
 
 	/*set up TCB for idle task*/
-	tcb[2].native_prio = OS_MAX_TASKS-1;
-	tcb[2].cur_prio = OS_MAX_TASKS-1;
+	system_tcb[OS_MAX_TASKS-1].native_prio = OS_MAX_TASKS-1;
+	system_tcb[OS_MAX_TASKS-1].cur_prio = OS_MAX_TASKS-1;
 	//tcb[0].context = (sched_context_t)0;
-	tcb[2].holds_lock = 0;
+	system_tcb[OS_MAX_TASKS-1].holds_lock = 0;
 	//tcb[0].sleep_queue = null;
 
 	/*make the idle task schedulable*/
-	runqueue_add(&tcb[2], tcb[2].cur_prio);
+	runqueue_add(&system_tcb[OS_MAX_TASKS-1], system_tcb[OS_MAX_TASKS-1].cur_prio);
 
 	while(1);
 	

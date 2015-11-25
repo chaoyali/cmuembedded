@@ -1,0 +1,8 @@
+/home/chaoya/Documents/18342/lab4/lab4/kernel/arm/load_user.o:  \
+ /home/chaoya/Documents/18342/lab4/lab4/kernel/arm/load_user.S \
+  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/bits/swi.h \
+  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/config.h
+
+/home/chaoya/Documents/18342/lab4/lab4/kernel/include/bits/swi.h:
+
+/home/chaoya/Documents/18342/lab4/lab4/kernel/include/config.h:

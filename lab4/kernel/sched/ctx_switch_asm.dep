@@ -1,0 +1,8 @@
+/home/chaoya/Documents/18342/lab4/lab4/kernel/sched/ctx_switch_asm.o:  \
+ /home/chaoya/Documents/18342/lab4/lab4/kernel/sched/ctx_switch_asm.S \
+  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/asm.h \
+  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/arm/psr.h
+
+/home/chaoya/Documents/18342/lab4/lab4/kernel/include/asm.h:
+
+/home/chaoya/Documents/18342/lab4/lab4/kernel/include/arm/psr.h:

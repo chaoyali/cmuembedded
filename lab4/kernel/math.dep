@@ -1,0 +1,8 @@
+/home/chaoya/Documents/18342/lab4/lab4/kernel/math.o:  \
+ /home/chaoya/Documents/18342/lab4/lab4/kernel/math.c \
+  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/types.h \
+  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/math.h
+
+/home/chaoya/Documents/18342/lab4/lab4/kernel/include/types.h:
+
+/home/chaoya/Documents/18342/lab4/lab4/kernel/include/math.h:

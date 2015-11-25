@@ -1,0 +1,8 @@
+/home/chaoya/Documents/18342/lab4/lab4/kernel/memcheck.o:  \
+ /home/chaoya/Documents/18342/lab4/lab4/kernel/memcheck.c \
+  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/kernel.h \
+  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/types.h
+
+/home/chaoya/Documents/18342/lab4/lab4/kernel/include/kernel.h:
+
+/home/chaoya/Documents/18342/lab4/lab4/kernel/include/types.h:

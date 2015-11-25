@@ -1,0 +1,17 @@
+/home/chaoya/Documents/18342/lab4/lab4/tasks/libc/stdio/sprintf.o:  \
+ /home/chaoya/Documents/18342/lab4/lab4/tasks/libc/stdio/sprintf.c \
+  /home/chaoya/Documents/18342/lab4/lab4/tasks/libc/include/stdio.h \
+  /home/chaoya/Documents/18342/lab4/lab4/tasks/libc/include/stdarg.h \
+  /home/chaoya/Documents/18342/lab4/lab4/tasks/libc/include/sys/types.h \
+  /home/chaoya/Documents/18342/lab4/lab4/tasks/libc/include/bits/types.h \
+  /home/chaoya/Documents/18342/lab4/lab4/tasks/libc/stdio/doprnt.h
+
+/home/chaoya/Documents/18342/lab4/lab4/tasks/libc/include/stdio.h:
+
+/home/chaoya/Documents/18342/lab4/lab4/tasks/libc/include/stdarg.h:
+
+/home/chaoya/Documents/18342/lab4/lab4/tasks/libc/include/sys/types.h:
+
+/home/chaoya/Documents/18342/lab4/lab4/tasks/libc/include/bits/types.h:
+
+/home/chaoya/Documents/18342/lab4/lab4/tasks/libc/stdio/doprnt.h:

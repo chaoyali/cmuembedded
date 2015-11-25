@@ -145,6 +145,7 @@ clobber: clean
 cp: all
 	sudo cp ./kernel/kernel.bin /media/bootfs
 	sudo cp ./tasks/bin/hello.bin /media/bootfs
+	sudo cp ./tasks/bin/splat.bin /media/bootfs
 	sync
 ########### DEPENDENCY FILE INCLUSION ############
 

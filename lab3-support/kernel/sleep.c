@@ -20,6 +20,6 @@ extern volatile unsigned long sys_time;
 void sleep(unsigned long msceond) {
     unsigned long target_time = sys_time + msceond;
     while(sys_time < target_time) {
-		printf("%ld  %ld\n", sys_time, target_time);
+
 	}
 }

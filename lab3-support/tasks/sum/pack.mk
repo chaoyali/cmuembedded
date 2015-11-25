@@ -1,0 +1,5 @@
+PROGS_SUM_OBJS := sum.o
+PROGS_SUM_OBJS := $(PROGS_SUM_OBJS:%=$(TDIR)/sum/%)
+ALL_OBJS += $(PROGS_SUM_OBJS)
+
+$(TDIR)/bin/sum : $(TSTART) $(PROGS_SUM_OBJS) $(TLIBC)

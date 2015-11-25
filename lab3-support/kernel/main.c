@@ -17,7 +17,7 @@ void C_SWI_handler(unsigned swi_num, unsigned *regs);
 extern ssize_t write(int fd, const void *buf, size_t count);
 extern ssize_t read(int fd, void *buf, size_t count);
 extern void init_interrupt(void);
-extern void init_timer0(void);\
+extern void init_timer0(void);
 extern void sleep(unsigned long msecond);
 void restore_handler(unsigned int *vector, unsigned *old_instr1, unsigned *old_instr2);
 void install_handler(unsigned int *vector, int handler, unsigned *old_instr1, unsigned *old_instr2);
@@ -39,8 +39,8 @@ int kmain(int argc, char* argv[], uint32_t table) {
 	install_handler((unsigned int*)0x18, (int)irq_handler, old_instr_irq_1, old_instr_irq_2);
 
 	//initiate the interrupt and timer 0
-	init_interrupt();
-	init_timer0();
+//	init_interrupt();
+//	init_timer0();
 	
 	//load user program	
 	exit_num = load_user(argc, argv);

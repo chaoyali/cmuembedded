@@ -13,7 +13,7 @@
 int main(int argc, char** argv)
 {
 	unsigned long mytime;
-//	sleep(100);
+	sleep(1000);
 	while (1) {
 		mytime = time();
 		if(mytime%1000 == 0) printf("mytime:%ld\n", mytime);

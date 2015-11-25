@@ -26,10 +26,9 @@ void C_IRQ_handler(){
 //		if (reg_read(OSTMR_OSSR_ADDR) & 0x1) {
 			// Increment time by 10ms
 			sys_time += 10;
-      		// Set OSMR to the next 10ms value
 
+			//clear the OSCR
 			reg_write(OSTMR_OSCR_ADDR, 0);
-//      	reg_write(OSTMR_OSMR_ADDR(0), reg_read(OSTMR_OSMR_ADDR(0)) + 32500);
 
       		// Writing a 1 to the bit acknowledges the match and hence, clears that bit
 			reg_set(OSTMR_OSSR_ADDR, OSTMR_OSSR_M0);

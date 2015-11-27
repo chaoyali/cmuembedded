@@ -1,5 +1,7 @@
 /**
  * @file device.c
+ * author: Chaoya Li <>
+ * 		   Ya Gao <yag1@andrew.cmu.edu>
  *
  * @brief Implements simulated devices.
  * @author Kartik Subramanian <ksubrama@andrew.cmu.edu>
@@ -48,12 +50,12 @@ void dev_init(void)
 	int i = 0;
 
 	for (i = 0; i < NUM_DEVICES; i++) {
+		/* initialize the sleep queue */
+		devices[i].sleep_queue = null;	// ??? how to initialize?
+		/* initialize the match value */
 		devices[i].next_match = dev_freq[i];
-		//need initialize the sleep_queue??
 	} 
-
 }
-
 
 /**
  * @brief Puts a task to sleep on the sleep queue until the next
@@ -63,12 +65,27 @@ void dev_init(void)
  */
 void dev_wait(unsigned int dev __attribute__((unused)))
 {
-	//update match time
-	device[dev].match += dev_freq[dev];
-	//remove the highest prio task.
-	runqueue_remove(highest_prio());
-	//add to sleep_queue.    how???
-
+	/* Disable interrupts */
+	disable_interrupts();
+	/* Put the tcb of the task (caller) into the queue */
+	tcb_t *caller_tcb = get_cur_tcb();	// !!! get_cur_tab() has not yet implemented
+	tcb_t *cur_queue = devices[dev].sleep_queue;
+	if (cur_queue == NULL) {
+		devices[dev].sleep_queue = caller_tcb;
+	} else {
+		while (cur_queue -> sleep_queue != NULL) 
+			cur_queue = cur_queue -> sleep_queue;	/* find the end of cur_queue */
+		cur_queue -> sleep_queue = caller_tcb;
+	}
+	caller_tcb -> sleep_queue = NULL;	/* end of the queue */
+	/* Enable interrupts */
+	enable_interrupts();
+	/* Context switch */
+	dispatch_sleep();	/* !!! dispatch_sleep() has not yet implemented */
+	// //update match time ??? do we need to change here
+	// device[dev].match += dev_freq[dev];
+	// //remove the highest prio task ??? do we need to remove here
+	// runqueue_remove(highest_prio());
 }
 
 
@@ -81,11 +98,27 @@ void dev_wait(unsigned int dev __attribute__((unused)))
  */
 void dev_update(unsigned long millis __attribute__((unused)))
 {	
-	int i;
+	disable_interrupts();
+	int i = 0;
+	tcb_t *tmp_queue;
+
+	/* Check whether the next event for every device has occured */
 	for (i = 0; i < NUM_DEVICES; i++) {
-		if (millis == devices[i].next_match) {
-			
+		if (devices[i].next_match <= millis) {
+			devices[i].next_match = dev_freq[i] + millis;
+			/* Make all the tasks on this device's sleep_queue ready to run */
+			tcb_t *cur_queue = devices[i].sleep_queue;
+			while (cur_queue != NULL) {
+				/* !!! runqueue_add() has not yet implemented */
+				runqueue_add(cur_queue, cur_queue -> cur_prio);
+				tmp_queue = cur_queue -> sleep_queue;
+				cur_queue -> sleep_queue = NULL;
+				cur_queue = tmp_queue; 
+			}
+			devices[i].sleep_queue = NULL;
+			/* Context switch */
+			dispatch_save();
 		}
 	}
+	enable_interrupts();
 }
-

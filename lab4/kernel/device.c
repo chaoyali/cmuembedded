@@ -1,11 +1,11 @@
 /**
  * @file device.c
- * author: Chaoya Li <>
- * 		   Ya Gao <yag1@andrew.cmu.edu>
+ * @author: Chaoya Li <>
+ * 		    Ya Gao <yag1@andrew.cmu.edu>
  *
  * @brief Implements simulated devices.
- * @author Kartik Subramanian <ksubrama@andrew.cmu.edu>
- * @date 2008-12-01
+ *
+ * @date 2015-12-27
  */
 
 #include <types.h>
@@ -68,7 +68,7 @@ void dev_wait(unsigned int dev __attribute__((unused)))
 	/* Disable interrupts */
 	disable_interrupts();
 	/* Put the tcb of the task (caller) into the queue */
-	tcb_t *caller_tcb = get_cur_tcb();	// !!! get_cur_tab() has not yet implemented
+	tcb_t *caller_tcb = get_cur_tcb();	
 	tcb_t *cur_queue = devices[dev].sleep_queue;
 	if (cur_queue == NULL) {
 		devices[dev].sleep_queue = caller_tcb;
@@ -81,7 +81,7 @@ void dev_wait(unsigned int dev __attribute__((unused)))
 	/* Enable interrupts */
 	enable_interrupts();
 	/* Context switch */
-	dispatch_sleep();	/* !!! dispatch_sleep() has not yet implemented */
+	dispatch_sleep();
 	// //update match time ??? do we need to change here
 	// device[dev].match += dev_freq[dev];
 	// //remove the highest prio task ??? do we need to remove here

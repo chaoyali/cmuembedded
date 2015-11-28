@@ -1,9 +1,11 @@
 /** @file ctx_switch.c
- * 
+ *
+ * @author: Chaoya Li <>
+ * 	    Ya Gao <yag1@andrew.cmu.edu> 
+ *
  * @brief C wrappers around assembly context switch routines.
  *
- * @author Kartik Subramanian <ksubrama@andrew.cmu.edu>
- * @date 2008-11-21
+ * @date 2015-12-27
  */
  
 
@@ -28,7 +30,11 @@ static __attribute__((unused)) tcb_t* cur_tcb; /* use this if needed */
  */
 void dispatch_init(tcb_t* idle __attribute__((unused)))
 {
-	
+	/* ??? Not quite understand */
+	/* Set the current task to idle */
+	cur_tcb = idle;
+	/* ??? Need to remove the prio of idle from runqueue? */
+	ctx_switch_half(&(cur_tcb -> context));
 }
 
 
@@ -42,7 +48,16 @@ void dispatch_init(tcb_t* idle __attribute__((unused)))
  */
 void dispatch_save(void)
 {
-	
+	uint8_t prio = highest_prio();
+	/* If the current task is not the highest priority task */
+	if (cur_tcb -> cur_prio > prio) {
+		tcb_t *task = runqueue_remove(prio);
+		sched_context_t *cur_ctx = &(cur_tcb -> context);
+		runqueue_add(cur_tcb, cur_tcb -> cur_prio);
+		cur_tcb = task;
+		/* !!! ctx_switch_full has not yet implemented */
+		ctx_switch_full(&(task -> context), cur_ctx);
+	}
 }
 
 /**
@@ -53,7 +68,13 @@ void dispatch_save(void)
  */
 void dispatch_nosave(void)
 {
-
+	/* Get the highest priority */
+	uint8_t prio = highest_prio();
+	/* Get the corresponding task */
+	tcb_t *task = runqueue_remove(prio);
+	/* Call ctx_switch_half */
+	cur_tcb = task;
+	ctx_switch_half(&(cur_tcb -> context));	/* !!! ctx_switch_half has not yet implemented */
 }
 
 
@@ -65,7 +86,14 @@ void dispatch_nosave(void)
  */
 void dispatch_sleep(void)
 {
-	
+	/* Similar implementation as dispatch_save but let the current task sleep, and don't 
+	 * add it into the runqueue
+	 */
+	uint8_t prio = highest_prio();
+	tcb_t *task = runqueue_remove(prio);
+	sched_context_t *cur_ctx = &(cur_tcb -> context);
+	cur_tcb = task;
+	ctx_switch_full(&(task -> context), cur_ctx);
 }
 
 /**
@@ -73,7 +101,7 @@ void dispatch_sleep(void)
  */
 uint8_t get_cur_prio(void)
 {
-	return 1; //fix this; dummy return to prevent compiler warning
+	return cur_tcb -> cur_prio;
 }
 
 /**
@@ -81,5 +109,5 @@ uint8_t get_cur_prio(void)
  */
 tcb_t* get_cur_tcb(void)
 {
-	return (tcb_t *) 0; //fix this; dummy return to prevent compiler warning
+	return cur_tcb; 
 }

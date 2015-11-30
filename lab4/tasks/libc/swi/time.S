@@ -2,8 +2,8 @@
  *
  * @brief time sycall wrapper
  *
- * @author Kartik Subramanian <ksubrama@andrew.cmu.edu>
- * @date 2008-10-31
+ * @Chaoya Li	<chaoyal@andrew.cmu.edu>
+ * @Ya Gao 	<yag1@andrew.cmu.edu>
  */
 
 #include <asm.h>

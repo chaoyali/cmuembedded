@@ -1,7 +1,7 @@
 /** @file ctx_switch.c
  *
- * @author: Chaoya Li <>
- * 	    Ya Gao <yag1@andrew.cmu.edu> 
+ * @Chaoya Li	<chaoyal@andrew.cmu.edu>
+ * @Ya Gao 	<yag1@andrew.cmu.edu> 
  *
  * @brief C wrappers around assembly context switch routines.
  *

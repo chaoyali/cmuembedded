@@ -1,7 +1,7 @@
 /**
  * @file device.c
- * @author: Chaoya Li <>
- * 		    Ya Gao <yag1@andrew.cmu.edu>
+ * @author:  @Chaoya Li	<chaoyal@andrew.cmu.edu>
+ * @Ya Gao 	<yag1@andrew.cmu.edu>
  *
  * @brief Implements simulated devices.
  *

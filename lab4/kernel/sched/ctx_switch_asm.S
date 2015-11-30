@@ -6,7 +6,8 @@
  * no co-processor registers and that the caller is in SVC mode. Furthermore,
  * the SPSR is considered a spare/scratch register and hence, is not saved.
  *
- * @author Kartik Subramanian
+ * @author   @Chaoya Li	<chaoyal@andrew.cmu.edu>
+ * @Ya Gao 	<yag1@andrew.cmu.edu>
  * @date   2008-11-21
  */
 

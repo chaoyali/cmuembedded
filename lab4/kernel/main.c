@@ -2,7 +2,8 @@
  *
  * @brief kernel main
  *
- * @author 
+ * @author  * @Chaoya Li	<chaoyal@andrew.cmu.edu>
+ * @Ya Gao 	<yag1@andrew.cmu.edu>
  *	   
  *	   
  * @date   

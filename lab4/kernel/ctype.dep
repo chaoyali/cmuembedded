@@ -1,8 +1,8 @@
-/home/chaoya/Documents/18342/lab4/lab4/kernel/ctype.o:  \
- /home/chaoya/Documents/18342/lab4/lab4/kernel/ctype.c \
-  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/ctype.h \
-  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/inline.h
+/home/chaoya/Documents/18342/lab3/lab4/kernel/ctype.o:  \
+ /home/chaoya/Documents/18342/lab3/lab4/kernel/ctype.c \
+  /home/chaoya/Documents/18342/lab3/lab4/kernel/include/ctype.h \
+  /home/chaoya/Documents/18342/lab3/lab4/kernel/include/inline.h
 
-/home/chaoya/Documents/18342/lab4/lab4/kernel/include/ctype.h:
+/home/chaoya/Documents/18342/lab3/lab4/kernel/include/ctype.h:
 
-/home/chaoya/Documents/18342/lab4/lab4/kernel/include/inline.h:
+/home/chaoya/Documents/18342/lab3/lab4/kernel/include/inline.h:

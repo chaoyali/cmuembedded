@@ -11,49 +11,37 @@
 #include <config.h>
 load_user:
 
-	@save all the register in svc mode
-	STMFD	sp!, {r0-r12, lr}
-	LDR		r2, =ADDR_SP_SAVE
-	STR		sp, [r2]
-
-	@ Switch to IRQ mode, set its stack
-	MRS   r2, cpsr
-	AND   r2, r2, #0xFFFFFFF0
-	ORR   r2, r2, #0x2
-	MSR   cpsr, r2
-	MOV   sp, #IRQ_STACK
-
 	@swich to user mode with FIQs masked.
-	MRS	r2, cpsr
-	BIC	r2, #0xff
-	ORR	r2, #0x50
-	MSR	cpsr, r2
+	MRS		r2, cpsr
+	BIC		r2, #0xff
+	ORR		r2, #0x50
+	MSR		cpsr, r2
 
-	@set user mode stack	
-	MOV	sp, #USER_STACK
+	@set stack
+	MOV   sp, #USR_STACK
+
+    @restore register r8
+    LDR  	r2, =global_data
+    LDR  	r8, [r2]
 
 	@push NULL
-	MOV	r3, #0
+	MOV		r3, #0
 	STMFD	sp!, {r3}
 	
 	@argc from uboot, act as a counter
-	MOV	r3, r0, LSL #2
+	MOV		r3, r0, LSL #2
 L1:
-	CMP	r3, #0
-	BEQ	L2
+	CMP		r3, #0
+	BEQ		L2
 	@load argv to stack
-	SUB	r3, r3, #4
-	LDR	r4, [r1, r3]
+	SUB		r3, r3, #4
+	LDR		r4, [r1, r3]
 	STMFD	sp!, {r4}
-	B	L1
+	B		L1
 L2:
 	STMFD	sp!, {r0}
 
 	@jump to 0xa0000000
-	MOV	r3, #USER_BEGIN
-	BLX	r3
-	
-	BL myprintf
-	@exit
-@	SWI	EXIT_SWI
+	MOV		r3, #LOAD_ADDR
+	BLX		r3
 

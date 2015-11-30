@@ -53,6 +53,7 @@ void dispatch_save(void)
 	uint8_t prio = highest_prio();
 	/* If the current task is not the highest priority task */
 	if (old_task -> cur_prio > prio) {
+
 		new_task = runqueue_remove(prio);
 		sched_context_t *old_ctx = &(old_task -> context);
 		runqueue_add(old_task, old_task -> cur_prio);
@@ -73,10 +74,10 @@ void dispatch_nosave(void)
 	/* Get the highest priority */
 	uint8_t prio = highest_prio();
 	/* Get the corresponding task */
-	tcb_t *task = runqueue_remove(prio);
+	tcb_t *tcb = runqueue_remove(prio);
 	/* Call ctx_switch_half */
-	cur_tcb = task;
-	ctx_switch_half(&(cur_tcb -> context));	/* !!! ctx_switch_half has not yet implemented */
+	cur_tcb = tcb;
+	ctx_switch_half(&(cur_tcb -> context));
 }
 
 
@@ -96,6 +97,7 @@ void dispatch_sleep(void)
 	sched_context_t *cur_ctx = &(cur_tcb -> context);
 	cur_tcb = task;
 	ctx_switch_full(&(task -> context), cur_ctx);
+
 }
 
 /**

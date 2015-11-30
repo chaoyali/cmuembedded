@@ -1,23 +1,23 @@
-/home/chaoya/Documents/18342/lab4/lab4/kernel/arm/C_SWI_hander.o:  \
- /home/chaoya/Documents/18342/lab4/lab4/kernel/arm/C_SWI_hander.c \
-  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/types.h \
-  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/arm/reg.h \
-  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/inline.h \
-  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/bits/swi.h \
-  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/syscall.h \
-  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/task.h \
-  /home/chaoya/Documents/18342/lab4/lab4/kernel/include/config.h
+/home/chaoya/Documents/18342/lab3/lab4/kernel/arm/C_SWI_hander.o:  \
+ /home/chaoya/Documents/18342/lab3/lab4/kernel/arm/C_SWI_hander.c \
+  /home/chaoya/Documents/18342/lab3/lab4/kernel/include/types.h \
+  /home/chaoya/Documents/18342/lab3/lab4/kernel/include/arm/reg.h \
+  /home/chaoya/Documents/18342/lab3/lab4/kernel/include/inline.h \
+  /home/chaoya/Documents/18342/lab3/lab4/kernel/include/bits/swi.h \
+  /home/chaoya/Documents/18342/lab3/lab4/kernel/include/syscall.h \
+  /home/chaoya/Documents/18342/lab3/lab4/kernel/include/task.h \
+  /home/chaoya/Documents/18342/lab3/lab4/kernel/include/config.h
 
-/home/chaoya/Documents/18342/lab4/lab4/kernel/include/types.h:
+/home/chaoya/Documents/18342/lab3/lab4/kernel/include/types.h:
 
-/home/chaoya/Documents/18342/lab4/lab4/kernel/include/arm/reg.h:
+/home/chaoya/Documents/18342/lab3/lab4/kernel/include/arm/reg.h:
 
-/home/chaoya/Documents/18342/lab4/lab4/kernel/include/inline.h:
+/home/chaoya/Documents/18342/lab3/lab4/kernel/include/inline.h:
 
-/home/chaoya/Documents/18342/lab4/lab4/kernel/include/bits/swi.h:
+/home/chaoya/Documents/18342/lab3/lab4/kernel/include/bits/swi.h:
 
-/home/chaoya/Documents/18342/lab4/lab4/kernel/include/syscall.h:
+/home/chaoya/Documents/18342/lab3/lab4/kernel/include/syscall.h:
 
-/home/chaoya/Documents/18342/lab4/lab4/kernel/include/task.h:
+/home/chaoya/Documents/18342/lab3/lab4/kernel/include/task.h:
 
-/home/chaoya/Documents/18342/lab4/lab4/kernel/include/config.h:
+/home/chaoya/Documents/18342/lab3/lab4/kernel/include/config.h:

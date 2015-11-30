@@ -40,7 +40,7 @@ void C_SWI_handler(unsigned swi_num, unsigned *regs){
    			
             break;
        case EVENT_WAIT:
-   			
+   			regs[0] = event_wait(regs[0]);
             break;
 
 		default:;

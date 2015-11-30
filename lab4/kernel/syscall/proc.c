@@ -45,11 +45,10 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
 		return -EINVAL;
 	}
 
-    runqueue_init();
-
     dev_init();
 
 	sort_tasks_by_prio(tasks, num_tasks);
+
 	allocate_tasks(&tasks, num_tasks);
 	//sched_init();
 	dispatch_nosave();

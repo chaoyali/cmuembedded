@@ -1,5 +1,8 @@
-/home/chaoya/Documents/18342/lab4/lab4/tasks/libc/swi/event_wait.o:  \
- /home/chaoya/Documents/18342/lab4/lab4/tasks/libc/swi/event_wait.S \
-  /home/chaoya/Documents/18342/lab4/lab4/tasks/libc/include/asm.h
+/home/chaoya/Documents/18342/lab3/lab4/tasks/libc/swi/event_wait.o:  \
+ /home/chaoya/Documents/18342/lab3/lab4/tasks/libc/swi/event_wait.S \
+  /home/chaoya/Documents/18342/lab3/lab4/tasks/libc/include/asm.h \
+  /home/chaoya/Documents/18342/lab3/lab4/tasks/libc/include/bits/swi.h
 
-/home/chaoya/Documents/18342/lab4/lab4/tasks/libc/include/asm.h:
+/home/chaoya/Documents/18342/lab3/lab4/tasks/libc/include/asm.h:
+
+/home/chaoya/Documents/18342/lab3/lab4/tasks/libc/include/bits/swi.h:

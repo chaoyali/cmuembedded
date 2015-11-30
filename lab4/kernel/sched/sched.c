@@ -85,13 +85,13 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 	context = &(system_tcb[IDLE_PRIO].context);
 	context->r4 = (uint32_t)idle;
 	context->r5 = 0;//don't need argument
-	context->r6 = 0;//don't need stack
+	context->r6 = 0xa2500000;//don't need stack
 	context->r7 = 0;
 	context->r8 = global_data;
 	context->r9 = 0;
 	context->r10 = 0;
 	context->r11 = 0;
-	context->sp = system_tcb[i].kstack_high;
+	context->sp = system_tcb[IDLE_PRIO].kstack_high;
 	context->lr = launch_task;
 
 	system_tcb[IDLE_PRIO].native_prio = IDLE_PRIO;

@@ -54,9 +54,9 @@ CWARNINGS1 = $(CWARNINGS_SAFE) $(CWARNINGS_NOISY)
 
 KCFLAGS = -g -Os -ffreestanding -ffixed-r8 -nostdinc $(CWARNINGS)
 TCFLAGS = -g -Os -ffreestanding -nostdinc $(CWARNINGS)
-ASFLAGS = -g -nostdinc -Wall -Wextra -Werror -DASSEMBLER
-KLDFLAGS = -g -nostdlib -N --fatal-warnings --warn-common -Ttext $(KLOAD_ADDR)
-TLDFLAGS = -g -nostdlib -N --fatal-warnings --warn-common -Ttext $(TLOAD_ADDR)
+ASFLAGS =  -nostdinc -Wall -Wextra -Werror -DASSEMBLER
+KLDFLAGS =  -nostdlib -N --fatal-warnings --warn-common -Ttext $(KLOAD_ADDR)
+TLDFLAGS =  -nostdlib -N --fatal-warnings --warn-common -Ttext $(TLOAD_ADDR)
 
 KINCLUDES = -I$(UDIR)/include -I$(KDIR)/include
 TINCLUDES = -I$(TLIBCDIR)/include

@@ -33,7 +33,7 @@ void C_IRQ_handler(){
 			reg_set(OSTMR_OSSR_ADDR, OSTMR_OSSR_M0);
 			
 			dev_update(sys_time);
-
+	//		printf("%ld:\n", sys_time);
 
 //		}
 	}

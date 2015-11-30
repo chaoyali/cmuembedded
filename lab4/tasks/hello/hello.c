@@ -8,12 +8,11 @@
  * @date   2008-10-29
  */
 #include <unistd.h>
-
+#include <stdio.h>
 const char hello[] = "Hello World\r\n";
 
 int main(int argc, char** argv)
 {
-
 	write(STDOUT_FILENO, hello, sizeof(hello) - 1);
 	printf("out\n");
 	return 0;

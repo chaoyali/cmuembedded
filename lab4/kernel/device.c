@@ -31,8 +31,6 @@
  * all tasks waiting on the device event to occur.
  */
 
-#define NULL ((void*)0)
-
 struct dev
 {
 	tcb_t* sleep_queue;
@@ -53,7 +51,7 @@ void dev_init(void)
 
 	for (i = 0; i < NUM_DEVICES; i++) {
 		/* initialize the sleep queue */
-		devices[i].sleep_queue = NULL;	// ??? how to initialize?
+		devices[i].sleep_queue = NULL;
 		/* initialize the match value */
 		devices[i].next_match = dev_freq[i];
 	} 
@@ -84,10 +82,6 @@ void dev_wait(unsigned int dev __attribute__((unused)))
 	enable_interrupts();
 	/* Context switch */
 	dispatch_sleep();
-	// //update match time ??? do we need to change here
-	// device[dev].match += dev_freq[dev];
-	// //remove the highest prio task ??? do we need to remove here
-	// runqueue_remove(highest_prio());
 }
 
 
@@ -103,23 +97,27 @@ void dev_update(unsigned long millis __attribute__((unused)))
 	disable_interrupts();
 	int i = 0;
 	tcb_t *tmp_queue;
-
+	int isNotEmpty = 0;
 	/* Check whether the next event for every device has occured */
 	for (i = 0; i < NUM_DEVICES; i++) {
 		if (devices[i].next_match <= millis) {
+			isNotEmpty = 0;
+
 			devices[i].next_match = dev_freq[i] + millis;
 			/* Make all the tasks on this device's sleep_queue ready to run */
 			tcb_t *cur_queue = devices[i].sleep_queue;
 			while (cur_queue != NULL) {
-				/* !!! runqueue_add() has not yet implemented */
+				isNotEmpty = 1;
 				runqueue_add(cur_queue, cur_queue -> cur_prio);
 				tmp_queue = cur_queue -> sleep_queue;
 				cur_queue -> sleep_queue = NULL;
 				cur_queue = tmp_queue; 
 			}
 			devices[i].sleep_queue = NULL;
-			/* Context switch */
-			dispatch_save();
+
+			/* Context switch when the sleep_queue is not empty*/
+			if (isNotEmpty)
+				dispatch_save();
 		}
 	}
 	enable_interrupts();

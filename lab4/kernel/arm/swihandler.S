@@ -24,8 +24,24 @@ swi_handler:
 	LDR		r0, [lr, #-4]
 	BIC		r0, r0, #0xff000000
 
+        @ Store stack and link register
+        STMFD sp, {sp, lr}^
+        ADD   sp, sp, #-8
+
+        @ Store spsr to a specific position????????????????????
+        MRS   r2, spsr
+        STR   r2, [sp, #56]
+
 	@go c handler to dispatch appropriate syscall
 	BL		C_SWI_handler
+
+        @ Restore spsr
+        LDR   r2, [sp, #56]
+        MSR   spsr, r2
+
+        @ Restore stack and link register????????????
+        LDMFD sp, {sp, lr}^
+        add   sp, sp, #8
 
 	@retore non-banked user space registers
 	LDMFD	sp!, {r0-r12, lr}

@@ -34,5 +34,6 @@ tcb_t* get_cur_tcb(void);
 void runqueue_add(tcb_t* tcb, uint8_t prio);
 tcb_t* runqueue_remove(uint8_t prio);
 uint8_t highest_prio(void);
+void runqueue_init(void);
 
 #endif /* SCHED_H */

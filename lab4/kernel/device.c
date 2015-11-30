@@ -31,6 +31,8 @@
  * all tasks waiting on the device event to occur.
  */
 
+#define NULL ((void*)0)
+
 struct dev
 {
 	tcb_t* sleep_queue;
@@ -51,7 +53,7 @@ void dev_init(void)
 
 	for (i = 0; i < NUM_DEVICES; i++) {
 		/* initialize the sleep queue */
-		devices[i].sleep_queue = null;	// ??? how to initialize?
+		devices[i].sleep_queue = NULL;	// ??? how to initialize?
 		/* initialize the match value */
 		devices[i].next_match = dev_freq[i];
 	} 

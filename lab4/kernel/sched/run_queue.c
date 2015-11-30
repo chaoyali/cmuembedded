@@ -13,7 +13,6 @@
 #include <sched.h>
 #include "sched_i.h"
 
-
 static tcb_t* run_list[OS_MAX_TASKS]  __attribute__((unused));
 
 /* A high bit in this bitmap means that the task whose priority is

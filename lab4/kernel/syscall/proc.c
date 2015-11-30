@@ -22,16 +22,44 @@
 #include <arm/physmem.h>
 #include <device.h>
 
+void sort_tasks_by_prio(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
+{
+	task_t temp;
+	size_t i = 0;
+	size_t j = 0;
+	for (i = 0; i < num_tasks; i++) {
+		for (j = i+1; j < num_tasks; j++) {
+			if (tasks[i].T > tasks[j].T) {
+				temp = tasks[i];
+				tasks[i] = tasks[j];
+				tasks[j] = temp;
+			}
+		}	
+	}
+}
+
 int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
-	/*should look at the task_t to learn everything needed about the tasks*/
+
+	if (num_tasks > OS_MAX_TASKS){
+		return -EINVAL;
+	}
+
+    runqueue_init();
+
+    dev_init();
+
+	sort_tasks_by_prio(tasks, num_tasks);
 	allocate_tasks(&tasks, num_tasks);
-  return 1; /* remove this line after adding your code */
+	//sched_init();
+	dispatch_nosave();
+	return 0;
 }
 
 int event_wait(unsigned int dev  __attribute__((unused)))
 {
-  return 1; /* remove this line after adding your code */	
+	dev_wait(dev);
+	return 1; /* remove this line after adding your code */	
 }
 
 /* An invalid syscall causes the kernel to exit. */

@@ -18,12 +18,11 @@
 #include <arm/exception.h>
 #include <arm/physmem.h>
 
-//#include <sched.h>
 tcb_t system_tcb[OS_MAX_TASKS]; /*allocate memory for system TCBs */
 
 void sched_init(task_t* main_task  __attribute__((unused)))
 {
-	
+
 }
 
 /**
@@ -55,38 +54,54 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 {
 //Your kernel should have logic of how to assign priority, initial context, etc. task_t contains the minimum information necessary for your kernel to initialize tcb. Document your design decision as comments.
 
-	
+	size_t i;
+	task_t* my_tasks = *tasks;
+	sched_context_t *context;
 
 	runqueue_init();
 
-	system_tcb[1].native_prio = 2;
-	system_tcb[1].cur_prio = 2;
-	//tcb[0].context = (sched_context_t)0;
-	system_tcb[1].holds_lock = 0;
-	//tcb[0].sleep_queue = null;
+	for (i = 1; i <= num_tasks; i++) {
+		context = &(system_tcb[i].context);
+		context->r4 = (uint32_t)my_tasks[i-1].lambda;
+		context->r5 = (uint32_t)my_tasks[i-1].data;
+		context->r6 = (uint32_t)my_tasks[i-1].stack_pos;
+		context->r7 = 0;
+    	context->r8 = global_data;
+    	context->r9 = 0;
+    	context->r10 = 0;
+    	context->r11 = 0;
+		context->sp = system_tcb[i].kstack_high;
+		context->lr = launch_task;
 
-//	run_list[tcb[0].cur_prio] = &tcb[0];
-	runqueue_add(&system_tcb[1], system_tcb[1].cur_prio);
-	//runqueue_add(tcb_t* tcb  __attribute__((unused)), uint8_t prio  __attribute__((unused)))
-
-	system_tcb[2].native_prio = 3;
-	system_tcb[2].cur_prio = 3;
-	//tcb[0].context = (sched_context_t)0;
-	system_tcb[2].holds_lock = 0;
-	//tcb[0].sleep_queue = null;
-	runqueue_add(&system_tcb[2], system_tcb[2].cur_prio);
-	//run_list[tcb[1].cur_prio] = &tcb[1];
+		system_tcb[i].native_prio = i;
+		system_tcb[i].cur_prio = i;
+		system_tcb[i].holds_lock = 0;
+		system_tcb[i].sleep_queue = NULL;
+	
+		runqueue_add(&system_tcb[i], system_tcb[i].cur_prio);
+	}
 
 	/*set up TCB for idle task*/
-	system_tcb[OS_MAX_TASKS-1].native_prio = OS_MAX_TASKS-1;
-	system_tcb[OS_MAX_TASKS-1].cur_prio = OS_MAX_TASKS-1;
-	//tcb[0].context = (sched_context_t)0;
-	system_tcb[OS_MAX_TASKS-1].holds_lock = 0;
-	//tcb[0].sleep_queue = null;
+	context = &(system_tcb[IDLE_PRIO].context);
+	context->r4 = (uint32_t)idle;
+	context->r5 = 0;//don't need argument
+	context->r6 = 0;//don't need stack
+	context->r7 = 0;
+	context->r8 = global_data;
+	context->r9 = 0;
+	context->r10 = 0;
+	context->r11 = 0;
+	context->sp = system_tcb[i].kstack_high;
+	context->lr = launch_task;
 
-	/*make the idle task schedulable*/
-	runqueue_add(&system_tcb[OS_MAX_TASKS-1], system_tcb[OS_MAX_TASKS-1].cur_prio);
+	system_tcb[IDLE_PRIO].native_prio = IDLE_PRIO;
+	system_tcb[IDLE_PRIO].cur_prio = IDLE_PRIO;
+	system_tcb[IDLE_PRIO].holds_lock = 0;
+	system_tcb[IDLE_PRIO].sleep_queue = NULL;
 
-	while(1);
+	runqueue_add(&system_tcb[IDLE_PRIO], system_tcb[IDLE_PRIO].cur_prio);
+
+
+	//dispatch_nosave();
 	
 }

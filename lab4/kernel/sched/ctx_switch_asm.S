@@ -40,8 +40,17 @@ FUNC(launch_task)
 
 /* r0 points to the target context, r1 to the current context. */
 /* add your code to perform a full context switch */
+/* save current context, then restore the context of the higher priority task*/
 FUNC(ctx_switch_full)
+	@ save current context
+    STMIA	r1, {r4-r11, sp, lr}
+    @ load target context
+    LDMIA	r0, {r4-r11, sp, lr}
+    MOV		pc, lr
 
-
-/*add your code to perform a half context switch */	
+/* add your code to perform a half context switch */
+/* load the context of the higher priority task*/	
 FUNC(ctx_switch_half)
+    @ Load target context
+    LDMIA	r0, {r4-r11, sp, lr}
+    MOV		pc, lr

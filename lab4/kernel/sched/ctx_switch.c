@@ -32,9 +32,9 @@ void dispatch_init(tcb_t* idle __attribute__((unused)))
 {
 	/* ??? Not quite understand */
 	/* Set the current task to idle */
-	cur_tcb = idle;
+	//cur_tcb = idle;
 	/* ??? Need to remove the prio of idle from runqueue? */
-	ctx_switch_half(&(cur_tcb -> context));
+	//ctx_switch_half(&(cur_tcb -> context));
 }
 
 
@@ -48,15 +48,17 @@ void dispatch_init(tcb_t* idle __attribute__((unused)))
  */
 void dispatch_save(void)
 {
+	tcb_t *new_task;
+	tcb_t *old_task = cur_tcb;
 	uint8_t prio = highest_prio();
 	/* If the current task is not the highest priority task */
-	if (cur_tcb -> cur_prio > prio) {
-		tcb_t *task = runqueue_remove(prio);
-		sched_context_t *cur_ctx = &(cur_tcb -> context);
-		runqueue_add(cur_tcb, cur_tcb -> cur_prio);
-		cur_tcb = task;
+	if (old_task -> cur_prio > prio) {
+		new_task = runqueue_remove(prio);
+		sched_context_t *old_ctx = &(old_task -> context);
+		runqueue_add(old_task, old_task -> cur_prio);
+		cur_tcb = new_task;
 		/* !!! ctx_switch_full has not yet implemented */
-		ctx_switch_full(&(task -> context), cur_ctx);
+		ctx_switch_full(&(new_task -> context), old_ctx);
 	}
 }
 

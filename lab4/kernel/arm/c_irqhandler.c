@@ -13,7 +13,7 @@
 #include <arm/interrupt.h>
 #include <arm/timer.h>
 #include <arm/reg.h>
-
+#include <device.h>
 
 extern unsigned long sys_time;
 //dispatch the handler
@@ -31,6 +31,8 @@ void C_IRQ_handler(){
 
       		// Writing a 1 to the bit acknowledges the match and hence, clears that bit
 			reg_set(OSTMR_OSSR_ADDR, OSTMR_OSSR_M0);
+			
+			dev_update(sys_time);
 
 
 //		}

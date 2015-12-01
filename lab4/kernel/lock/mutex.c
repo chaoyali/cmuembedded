@@ -3,10 +3,11 @@
  *
  * @brief Implements mutices.
  *
- * @author Harry Q Bovik < PUT YOUR NAMES HERE
+ * @author: Chaoya Li <chaoyal@andrew.cmu.edu>
+ * 		    Ya Gao <yag1@andrew.cmu.edu>
  *
  * 
- * @date  
+ * @date 2015-11-27
  */
 
 //#define DEBUG_MUTEX
@@ -23,24 +24,117 @@
 
 mutex_t gtMutex[OS_NUM_MUTEX];
 
+/* Initialize mutexes */
 void mutex_init()
 {
-	
+	int i = 0;
+	for (i = 0; i < OS_NUM_MUTEX; i++) {
+		gtMutex[i].bAvailable = TRUE;
+		gtMutex[i].pHolding_Tcb = NULL;
+		gtMutex[i].bLock = FALSE;
+		gtMutex[i].pSleep_queue = NULL;
+	}
 }
+
 
 int mutex_create(void)
 {
-	
-	return 1; // fix this to return the correct value
+	disable_interrupts();
+	int i = 0;
+	mutex_t *cur_mutex;
+
+	for (int i = 0; i < OS_NUM_MUTEX; i++) {
+		cur_mutex = &(gtMutex[i]);
+		if (cur_mutex -> bAvailable == TRUE) {
+			cur_mutex -> bAvailable = FALSE;
+			enable_interrupts();
+			return i;
+		}
+	}
+
+	enable_interrupts();
+	return -1; /* ??? Need to return error code ? */
 }
 
 int mutex_lock(int mutex  __attribute__((unused)))
 {
+	mutex_t *cur_mutex;
+	bool_e isLocked;
+	tcb_t *cur_tcb;
+
+	disable_interrupts();
+	/* Invalid mutex index */
+	if (mutex < 0 || mutex >= OS_NUM_MUTEX) {
+		enable_interrupts();
+		return -1;
+	}
+
+	cur_mutex = &(gtMutex[mutex]);
+	isLocked = cur_mutex -> bLock;
+	cur_tcb = get_cur_tcb();
+	/* Available mutex or self holding mutex */
+	if (cur_mutex -> bAvailable == TRUE || 
+		(isLocked && cur_mutex -> pHolding_Tcb == cur_tcb)) {
+		enable_interrupts();
+		return -1;
+	}
+
+	if (!isLocked) {	/* Free mutex to lock */
+		cur_mutex -> pHolding_Tcb = cur_tcb;
+		cur_mutex -> bLock = TRUE;
+		/* ??? Need to change the priority ? */
+	} else {	/* Add to the sleep queue */
+		tcb_t *sleep_tcb = cur_mutex -> pSleep_queue;
+		if (sleep_tcb == NULL) {
+			cur_mutex -> pSleep_queue = cur_tcb;
+			cur_tcb -> pSleep_queue = NULL;
+		}
+		else {
+			while (sleep_tcb -> sleep_queue != NULL)
+				sleep_tcb = sleep_tcb -> sleep_queue;
+			sleep_tcb -> sleep_queue = cur_tcb;
+			cur_tcb -> sleep_queue = NULL;
+		}
+		/* Context switch */
+		dispatch_sleep();
+	}
+	enable_interrupts();
 	return 1; // fix this to return the correct value
 }
 
 int mutex_unlock(int mutex  __attribute__((unused)))
 {
+	mutex_t *cur_mutex;
+	tcb_t *cur_tcb;
+
+	disable_interrupts();
+	/* Invalid mutex index */
+	if (mutex < 0 || mutex >= OS_NUM_MUTEX) {
+		enable_interrupts();
+		return -1;
+	}
+	cur_mutex = &(gtMutex[mutex]);
+	cur_tcb = get_cur_tcb();
+	/* Available mutex or unlocked mutex */
+	if (cur_mutex -> bAvailable == TRUE || cur_mutex -> bLock == FALSE ||
+		cur_mutex -> pHolding_Tcb != cur_tcb) {
+		enable_interrupts();
+		return -1;
+	}
+
+	/* Change the state of current mutex */
+	cur_mutex -> pHolding_Tcb = NULL;
+	cur_mutex -> bLock = FALSE;
+	tcb_t new_tcb = cur_mutex -> pSleep_queue;
+	if (new_tcb != NULL) {
+		/* Wake up the first task in sleep queue */
+		runqueue_add(new_tcb, new_tcb -> cur_prio);
+		cur_mutex -> pSleep_queue = new_tcb -> sleep_queue;
+		(new_tcb -> holds_lock)--;
+		new_tcb -> sleep_queue = NULL;
+	}
+	enable_interrupts();
 	return 1; // fix this to return the correct value
 }
+
 

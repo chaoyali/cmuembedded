@@ -43,7 +43,7 @@ int mutex_create(void)
 	int i = 0;
 	mutex_t *cur_mutex;
 
-	for (int i = 0; i < OS_NUM_MUTEX; i++) {
+	for (i = 0; i < OS_NUM_MUTEX; i++) {
 		cur_mutex = &(gtMutex[i]);
 		if (cur_mutex -> bAvailable == TRUE) {
 			cur_mutex -> bAvailable = FALSE;
@@ -87,7 +87,7 @@ int mutex_lock(int mutex  __attribute__((unused)))
 		tcb_t *sleep_tcb = cur_mutex -> pSleep_queue;
 		if (sleep_tcb == NULL) {
 			cur_mutex -> pSleep_queue = cur_tcb;
-			cur_tcb -> pSleep_queue = NULL;
+			cur_tcb -> sleep_queue = NULL;
 		}
 		else {
 			while (sleep_tcb -> sleep_queue != NULL)
@@ -125,7 +125,7 @@ int mutex_unlock(int mutex  __attribute__((unused)))
 	/* Change the state of current mutex */
 	cur_mutex -> pHolding_Tcb = NULL;
 	cur_mutex -> bLock = FALSE;
-	tcb_t new_tcb = cur_mutex -> pSleep_queue;
+	tcb_t* new_tcb = cur_mutex -> pSleep_queue;
 	if (new_tcb != NULL) {
 		/* Wake up the first task in sleep queue */
 		runqueue_add(new_tcb, new_tcb -> cur_prio);
@@ -136,5 +136,7 @@ int mutex_unlock(int mutex  __attribute__((unused)))
 	enable_interrupts();
 	return 1; // fix this to return the correct value
 }
+
+
 
 

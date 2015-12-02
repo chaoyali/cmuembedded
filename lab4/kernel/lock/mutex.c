@@ -52,7 +52,8 @@ int mutex_create(void)
 	}
 
 	enable_interrupts();
-	return -ENOMEM; /* ??? Need to return error code ? */
+	/* Set errno and return val. indicating error in wrapper */
+	return -ENOMEM;
 }
 
 int mutex_lock(int mutex  __attribute__((unused)))
@@ -65,17 +66,20 @@ int mutex_lock(int mutex  __attribute__((unused)))
 	/* Invalid mutex index */
 	if (mutex < 0 || mutex >= OS_NUM_MUTEX) {
 		enable_interrupts();
-		return -EINVAL;
+		return EINVAL;
 	}
 
 	cur_mutex = &(gtMutex[mutex]);
 	isLocked = cur_mutex -> bLock;
 	cur_tcb = get_cur_tcb();
 	/* Available mutex or self holding mutex */
-	if (cur_mutex -> bAvailable == TRUE || 
-		(isLocked && cur_mutex -> pHolding_Tcb == cur_tcb)) {
+	if (cur_mutex -> bAvailable == TRUE) {
 		enable_interrupts();
-		return -1;
+		return EINVAL;
+	}
+	if (isLocked && cur_mutex -> pHolding_Tcb == cur_tcb) }{
+		enable_interrupts();
+		return EDEADLOCK;
 	}
 
 	if (!isLocked) {	/* Free mutex to lock */
@@ -99,7 +103,7 @@ int mutex_lock(int mutex  __attribute__((unused)))
 		dispatch_sleep();
 	}
 	enable_interrupts();
-	return 1; // fix this to return the correct value
+	return 0; // fix this to return the correct value
 }
 
 int mutex_unlock(int mutex  __attribute__((unused)))
@@ -111,15 +115,18 @@ int mutex_unlock(int mutex  __attribute__((unused)))
 	/* Invalid mutex index */
 	if (mutex < 0 || mutex >= OS_NUM_MUTEX) {
 		enable_interrupts();
-		return -EINVAL;
+		return EINVAL;
 	}
 	cur_mutex = &(gtMutex[mutex]);
 	cur_tcb = get_cur_tcb();
 	/* Available mutex or unlocked mutex */
-	if (cur_mutex -> bAvailable == TRUE || cur_mutex -> bLock == FALSE ||
-		cur_mutex -> pHolding_Tcb != cur_tcb) {
+	if (cur_mutex -> bAvailable == TRUE || cur_mutex -> bLock == FALSE) {
 		enable_interrupts();
-		return -1;
+		return EINVAL;
+	}
+	if (cur_mutex -> pHolding_Tcb != cur_tcb) {
+		enable_interrupts();
+		return EPERM;
 	}
 
 	/* Change the state of current mutex */
@@ -134,5 +141,6 @@ int mutex_unlock(int mutex  __attribute__((unused)))
 	}
 	(new_tcb -> holds_lock)--;
 	enable_interrupts();
-	return 1; // fix this to return the correct value
+	return 0; // fix this to return the correct value
 }
+

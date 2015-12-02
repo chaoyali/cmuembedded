@@ -77,7 +77,7 @@ int mutex_lock(int mutex  __attribute__((unused)))
 		enable_interrupts();
 		return EINVAL;
 	}
-	if (isLocked && cur_mutex -> pHolding_Tcb == cur_tcb) }{
+	if (isLocked && cur_mutex -> pHolding_Tcb == cur_tcb) {
 		enable_interrupts();
 		return EDEADLOCK;
 	}
@@ -143,4 +143,5 @@ int mutex_unlock(int mutex  __attribute__((unused)))
 	enable_interrupts();
 	return 0; // fix this to return the correct value
 }
+
 

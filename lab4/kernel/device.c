@@ -78,10 +78,12 @@ void dev_wait(unsigned int dev __attribute__((unused)))
 		cur_queue -> sleep_queue = caller_tcb;
 	}
 	caller_tcb -> sleep_queue = NULL;	/* end of the queue */
-	/* Enable interrupts */
-	enable_interrupts();
+
 	/* Context switch */
 	dispatch_sleep();
+
+	/* Enable interrupts */
+	enable_interrupts();
 }
 
 
@@ -118,11 +120,12 @@ void dev_update(unsigned long millis __attribute__((unused)))
 			devices[i].sleep_queue = NULL;
 		}
 	}
-	enable_interrupts();
+
 	/* Context switch when the sleep_queue is not empty*/
 	if (isNotEmpty) {
 
 		dispatch_save();
 	}
+	enable_interrupts();
 
 }

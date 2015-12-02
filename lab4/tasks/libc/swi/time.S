@@ -14,7 +14,7 @@
 FUNC(time)
 
 time:
-	STMFD	sp!, {r1-r12, lr}	@ store user s' gp registers and lr
+@	STMFD	sp!, {r1-r12, lr}	@ store user s' gp registers and lr
 	SWI		TIME_SWI
-	LDMFD	sp!, {r1-r12, lr}	@ unstack user's registers
+@	LDMFD	sp!, {r1-r12, lr}	@ unstack user's registers
 	BX		lr

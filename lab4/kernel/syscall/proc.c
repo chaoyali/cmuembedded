@@ -41,6 +41,10 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
 	if (num_tasks > OS_MAX_TASKS){
 		return -EINVAL;
 	}
+	if(!valid_addr(tasks, num_tasks, USR_START_ADDR, USR_END_ADDR)) {
+        return -EFAULT;
+    }
+	
 	mutex_init();
     dev_init();
 

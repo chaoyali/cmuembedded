@@ -51,7 +51,7 @@ swi_handler:
 
 	@retore non-banked user space registers
 	LDMFD	sp!, {r0-r12, lr}
-	
+
 	@ return
 	MOVS	pc, lr		
 

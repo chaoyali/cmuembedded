@@ -20,7 +20,6 @@
 #include <arm/exception.h>
 #ifdef DEBUG_MUTEX
 #include <exports.h> // temp
-
 #endif
 
 mutex_t gtMutex[OS_NUM_MUTEX];
@@ -48,7 +47,6 @@ int mutex_create(void)
 		if (cur_mutex -> bAvailable == TRUE) {
 			cur_mutex -> bAvailable = FALSE;
 			enable_interrupts();
-
 			return i;
 		}
 	}
@@ -94,8 +92,7 @@ int mutex_lock(int mutex  __attribute__((unused)))
 		if (sleep_tcb == NULL) {
 			cur_mutex -> pSleep_queue = cur_tcb;
 			cur_tcb -> sleep_queue = NULL;
-		}
-		else {
+		} else {
 			while (sleep_tcb -> sleep_queue != NULL)
 				sleep_tcb = sleep_tcb -> sleep_queue;
 			sleep_tcb -> sleep_queue = cur_tcb;
@@ -103,6 +100,10 @@ int mutex_lock(int mutex  __attribute__((unused)))
 		}
 		/* Context switch */
 		dispatch_sleep();
+		/* Obtain the lock */
+		cur_mutex -> pHolding_Tcb = cur_tcb;
+		cur_mutex -> bLock = TRUE;
+		(cur_tcb -> holds_lock)++;
 	}
 	enable_interrupts();
 	return 0; // fix this to return the correct value

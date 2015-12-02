@@ -12,7 +12,7 @@
 #include <kernel.h>
 #include <syscall.h>
 #include <sched.h>
-
+#include <lock.h>
 #include <arm/reg.h>
 #include <arm/psr.h>
 #include <arm/exception.h>
@@ -41,7 +41,7 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
 	if (num_tasks > OS_MAX_TASKS){
 		return -EINVAL;
 	}
-
+	mutex_init();
     dev_init();
 
 	sort_tasks_by_prio(tasks, num_tasks);

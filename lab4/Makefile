@@ -14,7 +14,7 @@ MAKEFLAGS += -rR
 # Make sure there are no name clashes.  Add new ones here if you make your own
 # tests (which I recommend you do).
 
-PACKAGES = dagger hello
+PACKAGES = dagger sys_err simple_mutex cyclone mutex_chaser stress
 
 .PHONY: all package clean clobber $(PACKAGES)
 all: package kernel
@@ -52,11 +52,11 @@ CWARNINGS_SAFE = -Wall -Wno-unused-parameter -Wextra -Wpointer-arith \
 CWARNINGS =  $(CWARNINGS_SAFE)
 CWARNINGS1 = $(CWARNINGS_SAFE) $(CWARNINGS_NOISY)
 
-KCFLAGS = -g -Os -ffreestanding -ffixed-r8 -nostdinc $(CWARNINGS)
-TCFLAGS = -g -Os -ffreestanding -nostdinc $(CWARNINGS)
-ASFLAGS =  -nostdinc -Wall -Wextra -Werror -DASSEMBLER
-KLDFLAGS =  -nostdlib -N --fatal-warnings --warn-common -Ttext $(KLOAD_ADDR)
-TLDFLAGS =  -nostdlib -N --fatal-warnings --warn-common -Ttext $(TLOAD_ADDR)
+KCFLAGS = -Os -ffreestanding -ffixed-r8 -nostdinc $(CWARNINGS)
+TCFLAGS = -Os -ffreestanding -nostdinc $(CWARNINGS)
+ASFLAGS = -nostdinc -Wall -Wextra -Werror -DASSEMBLER
+KLDFLAGS = -nostdlib -N --fatal-warnings --warn-common -Ttext $(KLOAD_ADDR)
+TLDFLAGS = -nostdlib -N --fatal-warnings --warn-common -Ttext $(TLOAD_ADDR)
 
 KINCLUDES = -I$(UDIR)/include -I$(KDIR)/include
 TINCLUDES = -I$(TLIBCDIR)/include
@@ -146,7 +146,10 @@ clobber: clean
 cp: all
 	sudo cp ./kernel/kernel.bin /media/bootfs
 	sudo cp ./tasks/bin/hello.bin /media/bootfs
-	sudo cp ./tasks/bin/dagger.bin /media/bootfs
+	sudo cp ./tasks/bin/simple_mutex.bin /media/bootfs
+	sudo cp ./tasks/bin/cyclone.bin /media/bootfs
+	sudo cp ./tasks/bin/stress.bin /media/bootfs
+	sudo cp ./tasks/bin/sys_err.bin /media/bootfs
 	sync
 ########### DEPENDENCY FILE INCLUSION ############
 

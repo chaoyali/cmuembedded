@@ -20,6 +20,7 @@
 #include <arm/exception.h>
 #ifdef DEBUG_MUTEX
 #include <exports.h> // temp
+
 #endif
 
 mutex_t gtMutex[OS_NUM_MUTEX];
@@ -47,6 +48,7 @@ int mutex_create(void)
 		if (cur_mutex -> bAvailable == TRUE) {
 			cur_mutex -> bAvailable = FALSE;
 			enable_interrupts();
+
 			return i;
 		}
 	}

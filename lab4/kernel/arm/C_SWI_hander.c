@@ -14,12 +14,12 @@ void C_SWI_handler(unsigned swi_num, unsigned *regs){
 //			exit(regs[0]);
 //			break;
 		
-		case READ_SWI: 
-			regs[0] = read_syscall(regs[0], (void *)regs[1], regs[2]); 
-			break;
-		case WRITE_SWI:
-			write_syscall(regs[0], (void *)regs[1], regs[2]); 
-			break;
+	case READ_SWI: 
+		regs[0] = read_syscall(regs[0], (void *)regs[1], regs[2]); 
+		break;
+	case WRITE_SWI:
+		write_syscall(regs[0], (void *)regs[1], regs[2]); 
+		break;
     case TIME_SWI:
         regs[0] = sys_time;
         break;

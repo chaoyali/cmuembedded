@@ -10,6 +10,7 @@
   /home/chaoya/Documents/18342/lab3/lab4/kernel/include/syscall.h \
   /home/chaoya/Documents/18342/lab3/lab4/kernel/include/task.h \
   /home/chaoya/Documents/18342/lab3/lab4/kernel/include/sched.h \
+  /home/chaoya/Documents/18342/lab3/lab4/kernel/include/lock.h \
   /home/chaoya/Documents/18342/lab3/lab4/kernel/include/arm/reg.h \
   /home/chaoya/Documents/18342/lab3/lab4/kernel/include/inline.h \
   /home/chaoya/Documents/18342/lab3/lab4/kernel/include/arm/psr.h \
@@ -36,6 +37,8 @@
 /home/chaoya/Documents/18342/lab3/lab4/kernel/include/task.h:
 
 /home/chaoya/Documents/18342/lab3/lab4/kernel/include/sched.h:
+
+/home/chaoya/Documents/18342/lab3/lab4/kernel/include/lock.h:
 
 /home/chaoya/Documents/18342/lab3/lab4/kernel/include/arm/reg.h:
 

@@ -88,8 +88,6 @@ int mutex_lock(int mutex  __attribute__((unused)))
 		cur_mutex -> bLock = TRUE;
 		(cur_tcb -> holds_lock)++;
 		/* ??? Need to change the priority ? */
-		cur_tcb->native_prio = cur_tcb->cur_prio;
-    	cur_tcb->cur_prio = 0;
 	} else {	/* Add to the sleep queue */
 		tcb_t *sleep_tcb = cur_mutex -> pSleep_queue;
 		if (sleep_tcb == NULL) {
@@ -129,6 +127,10 @@ int mutex_unlock(int mutex  __attribute__((unused)))
 		enable_interrupts();
 		return EINVAL;
 	}
+	if (cur_mutex -> pHolding_Tcb != cur_tcb) {
+		enable_interrupts();
+		return EPERM;
+	}
 
 	/* Change the state of current mutex */
 	cur_mutex -> pHolding_Tcb = NULL;
@@ -145,5 +147,3 @@ int mutex_unlock(int mutex  __attribute__((unused)))
 	enable_interrupts();
 	return 0; // fix this to return the correct value
 }
-
-

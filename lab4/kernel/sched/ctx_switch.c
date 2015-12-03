@@ -51,7 +51,6 @@ void dispatch_save(void)
 	tcb_t *new_task;
 	tcb_t *old_task = cur_tcb;
 	uint8_t prio = highest_prio();
-//	printf("save: %d\n", prio);
 	/* If the current task is not the highest priority task */
 	if (old_task -> cur_prio > prio) {
 
@@ -94,11 +93,13 @@ void dispatch_sleep(void)
 	 * add it into the runqueue
 	 */
 	uint8_t prio = highest_prio();
+	tcb_t *new_task;
 
-	tcb_t *task = runqueue_remove(prio);
+	new_task = runqueue_remove(prio);
+
 	sched_context_t *cur_ctx = &(cur_tcb -> context);
-	cur_tcb = task;
-	ctx_switch_full(&(task -> context), cur_ctx);
+	cur_tcb = new_task;
+	ctx_switch_full(&(new_task -> context), cur_ctx);
 
 }
 

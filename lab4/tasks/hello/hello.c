@@ -14,6 +14,5 @@ const char hello[] = "Hello World\r\n";
 int main(int argc, char** argv)
 {
 	write(STDOUT_FILENO, hello, sizeof(hello) - 1);
-	printf("out\n");
 	return 0;
 }

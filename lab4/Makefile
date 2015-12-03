@@ -52,8 +52,8 @@ CWARNINGS_SAFE = -Wall -Wno-unused-parameter -Wextra -Wpointer-arith \
 CWARNINGS =  $(CWARNINGS_SAFE)
 CWARNINGS1 = $(CWARNINGS_SAFE) $(CWARNINGS_NOISY)
 
-KCFLAGS = -Os -ffreestanding -ffixed-r8 -nostdinc $(CWARNINGS)
-TCFLAGS = -Os -ffreestanding -nostdinc $(CWARNINGS)
+KCFLAGS = -g -Os -ffreestanding -ffixed-r8 -nostdinc $(CWARNINGS)
+TCFLAGS = -g -Os -ffreestanding -nostdinc $(CWARNINGS)
 ASFLAGS = -nostdinc -Wall -Wextra -Werror -DASSEMBLER
 KLDFLAGS = -nostdlib -N --fatal-warnings --warn-common -Ttext $(KLOAD_ADDR)
 TLDFLAGS = -nostdlib -N --fatal-warnings --warn-common -Ttext $(TLOAD_ADDR)
@@ -150,6 +150,7 @@ cp: all
 	sudo cp ./tasks/bin/cyclone.bin /media/bootfs
 	sudo cp ./tasks/bin/stress.bin /media/bootfs
 	sudo cp ./tasks/bin/sys_err.bin /media/bootfs
+	sudo cp ./tasks/bin/mutex_chaser.bin /media/bootfs
 	sync
 ########### DEPENDENCY FILE INCLUSION ############
 

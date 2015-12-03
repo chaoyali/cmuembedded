@@ -30,7 +30,6 @@ void fun1(void* str)
 {
 	// On first pass, create the shared mutex
 	mid = mutex_create();
-	printf("mid: %d\n", mid);
 	while(1) {
 		if(even_t1) {	
 			// first and last s

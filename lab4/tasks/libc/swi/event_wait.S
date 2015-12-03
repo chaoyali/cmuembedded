@@ -12,24 +12,24 @@
 
 FUNC(event_wait)
 
-    @ Call event_wait
     SWI		EVENT_WAIT
 
-    @ Find out the return is negative or not.
-    CMP   r0, #0
+	@check te return number
+    CMP		r0, #0
 
-    @ For positive return value, just return original value.
-    BGE   .L1
+    @ if return nunber > 0, return immediately
+    BGE		.L1
 
-    @ For negative return value, compute absolute value.
-    RSB   r0, r0, #0
+    @ if return value < 0, get the absolute value.
+    RSB		r0, r0, #0
 
-    @ Set errno value to the global errno varible.
-    LDR   r1, =errno
-    STR   r0, [r1]
+    @ set errno
+    LDR		r1, =errno
+    STR		r0, [r1]
 
-    @ Set return value to -1.
-    MOV   r0, #-1
+    @ set return value to -1
+    MOV		r0, #-1
+
 .L1:
     MOV   pc, lr
 

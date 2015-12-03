@@ -17,51 +17,48 @@
 #define EOT_CHAR 0x04
 #define DEL_CHAR 0x7f
 
+size_t sdram_start = 0xa0000000;
+size_t sdram_end = 0xa3ffffff;
+size_t sfrom_start = 0x00000000;
+size_t sfrom_end = 0x00ffffff;
 
 /* Read count bytes (or less) from fd into the buffer buf. */
 ssize_t read_syscall(int fd __attribute__((unused)), void *buf __attribute__((unused)), size_t count __attribute__((unused)))
 {
 
-	unsigned count_read = 0;	
-	char *read_buf = (char *)buf;
-	
-	//check the fd
-	if(fd != 0) //not STDIN
+	size_t byte_count = 0;
+	char *charBuf = (char *)buf;
+	char c;
+
+	if (fd != STDIN_FILENO)	/* U-Boot API can only read from stdin */
 		return -EBADF;
-	//check the range of buf
-	if(((unsigned)&buf < (unsigned)0xa0000000)||(((unsigned)&buf + (unsigned)count) > (unsigned)0xa3ffffff))
-		return -EFAULT;	
-	
-	//read
-	while (count_read < count) {
-		if(tstc()) {
-			read_buf[count_read] = getc();
-	
-			//EOT
-			if (read_buf[count_read] == 4) {	//EOT
-				return count_read;
-			}
-			//check \r  \n
-			if (read_buf[count_read] == 10 || read_buf[count_read] == 13) {
-				read_buf[count_read] = 10;
+
+	if ((size_t)charBuf < sdram_start || (size_t)charBuf + count > sdram_end)
+		return -EFAULT;
+
+	while (byte_count < count) {
+		c = getc();
+		if (c == 4)	/* EOT character */
+			return byte_count;
+		else if (c == 8 || c == 127) {	/* backspace or delete */
+			byte_count--;
+			puts("\b \b");
+		} 
+		else if (c == 10 || c == 13)	{/* newline or carriage return */
+				charBuf[byte_count] = '\n';
+				byte_count++;
 				putc('\n');
-				count_read ++;
-				return count_read;
+				return byte_count;
+		}
+		else {
+			charBuf[byte_count] = c;
+			byte_count++;
+			putc(c);
 
-			}
-			//check the backspace and delete
-			if (read_buf[count_read] == 8 || read_buf[count_read] == 127) {
-				count_read --;
-				puts("\b \b");
-				continue;
-
-			}
-			putc(read_buf[count_read]);
-			count_read++;
-		}	
+		}
 	}
-	//if buffer full, return here.
-	return count_read;
+
+	return byte_count;
 	
 }
 
@@ -69,26 +66,28 @@ ssize_t read_syscall(int fd __attribute__((unused)), void *buf __attribute__((un
 ssize_t write_syscall(int fd  __attribute__((unused)), const void *buf  __attribute__((unused)), size_t count  __attribute__((unused)))
 {
 
-	unsigned i;
+	size_t byte_count = 0;
+	char *charBuf = (char *)buf;
+	char c;
 
-	//check the fd	
-	if (fd != 1)
+	if (fd != STDOUT_FILENO)
 		return -EBADF;
 
-	//check whether the buf is in ROM/SDRAM
-	if (((unsigned)&buf < (unsigned)0xa0000000) || (((unsigned)&buf + count) > (unsigned)0xa3ffffff) ||
-	     (((unsigned)&buf + count) < (unsigned)0x00ffffff))
+	if ((size_t)charBuf < sfrom_start || 
+		((size_t)charBuf + count > sfrom_end && (size_t)charBuf + count < sdram_start) ||
+		((size_t)charBuf > sfrom_end && (size_t)charBuf < sdram_start) ||
+		(size_t)charBuf + count > sdram_end)
 		return -EFAULT;
-	
-	//write
-	for(i = 0; i < count; i++) {
-		if (((char*)buf)[i] == '\0'){
-			count++;
-			break;
-		}
-		putc(((char*)buf)[i]);
+
+	while (byte_count < count) {
+		c = charBuf[byte_count];
+		if (c == '\0')
+			return byte_count;
+		putc(c);
+		byte_count++;
 	}
-	return count;
+
+	return byte_count;
 	
 }
 

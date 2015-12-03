@@ -12,20 +12,15 @@
 	.file "write.S"
 
 FUNC(write)
-write:
-	push	{lr}		@save the return address
+
 	swi	WRITE_SWI
-	cmp	r0, #0		@check the return value
-	bge	.done
+	cmp	r0, #0	@ check return value
+	bge	.L0
 
-	@if error
-	mvn	r1, r0
-	add	r1, r1, #1
-	ldr	r2, =errno
-	str	r1, [r2]
-	mov	r0, #-1
-.done:
-	pop	{lr}
-	bx	lr
+	rsb r0, r0, #0	@ get the negative of return value
+	ldr r1, = errno	@load the address of errno
+	str r0, [r1]
+	mov r0, #-1	@ return -1 on error
 
-	.global errno
+.L0:
+	mov pc, lr

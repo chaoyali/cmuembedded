@@ -52,6 +52,10 @@ swi_handler:
 	@retore non-banked user space registers
 	LDMFD	sp!, {r0-r12, lr}
 
+    @ recover r8
+	LDR   	r2, =global_data
+	LDR   	r8, [r2]
+
 	@ return
 	MOVS	pc, lr		
 

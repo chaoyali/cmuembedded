@@ -26,7 +26,7 @@
 #define NO_STR  "\033[31;1mNo!\033[0m\n"
 #define TEST_DONE "\033[32;1mTEST PASSED SUCCESSFULLY!\033[0m\n"
 
-//order of operations: ((init_val+3)*11-7)*13=61
+//order of operations: ((init_val+3)*11-7)*13=624: fun1->
 static int fun1_opval=3;
 static int fun2_opval=11;
 static int fun3_opval=7;
@@ -155,7 +155,7 @@ int main(int argc, char** argv)
         mutex = mutex_create();
         if(errno == ENOMEM)
             puts("failed to create a mutex!!");
-        mutex_val[i]=init_val;            
+        mutex_val[i]=init_val;  
     }
     puts("Successfully created all the mutexes!!");
     puts(YES_STR);

@@ -79,6 +79,7 @@ void allocate_tasks(task_t** tasks  __attribute__((unused)), size_t num_tasks  _
 		system_tcb[i].sleep_queue = NULL;
 	
 		runqueue_add(&system_tcb[i], system_tcb[i].cur_prio);
+
 	}
 
 	/*set up TCB for idle task*/

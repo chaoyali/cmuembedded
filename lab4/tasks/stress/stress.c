@@ -32,10 +32,8 @@ void fun1(void* str)
 		}
 		score[(int)str]++;
 		sleep((int)str);
-//		printf("sleep ok, %d, %d\n", (int)str, score[(int)str]);
 		if (event_wait((int)str) < 0)
 			panic("Dev 0 failed");
-//		printf("event_wait, %d\n", (int)str);
 	}
 }
 

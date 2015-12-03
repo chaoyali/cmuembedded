@@ -123,11 +123,12 @@ int mutex_unlock(int mutex  __attribute__((unused)))
 	cur_mutex = &(gtMutex[mutex]);
 	cur_tcb = get_cur_tcb();
 	/* Available mutex or unlocked mutex */
-	if (cur_mutex -> bAvailable == TRUE || cur_mutex -> bLock == FALSE) {
+	if (cur_mutex -> bAvailable == TRUE) {
 		enable_interrupts();
 		return EINVAL;
 	}
-	if (cur_mutex -> pHolding_Tcb != cur_tcb) {
+
+	if (cur_mutex -> bLock == FALSE || cur_mutex -> pHolding_Tcb != cur_tcb) {
 		enable_interrupts();
 		return EPERM;
 	}

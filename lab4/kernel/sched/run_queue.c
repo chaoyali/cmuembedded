@@ -75,7 +75,7 @@ void runqueue_init(void)
 void runqueue_add(tcb_t* tcb  __attribute__((unused)), uint8_t prio  __attribute__((unused)))
 {
 	int ostcbx, ostcby;
-	
+
 	//add tcb to run list
 	run_list[prio] = tcb;
 
@@ -101,11 +101,15 @@ tcb_t* runqueue_remove(uint8_t prio  __attribute__((unused)))
 	ostcbx = prio & 0x7;
 	ostcby = prio >> 3;
 
-	run_bits[ostcby] ^= (1 << ostcbx);
+//	run_bits[ostcby] ^= (1 << ostcbx);
+	run_bits[ostcby] = run_bits[ostcby] & (~(1 << ostcbx));
 	if (run_bits[ostcby] == 0)
-		group_run_bits ^= (1 << ostcby);
+//		group_run_bits ^= (1 << ostcby);
+		group_run_bits = group_run_bits & (~(1 << ostcby));
+	tcb_t * ret_tcb = run_list[prio];
+	run_list[prio] = NULL;
 
-	return run_list[prio];	
+	return ret_tcb;	
 }
 
 /**

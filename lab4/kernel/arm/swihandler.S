@@ -37,9 +37,9 @@ swi_handler:
 	BL		C_SWI_handler
 
 	@ disable interrupt
-	MRS r2, cpsr
-	ORR r2, #PSR_IRQ
-	MSR cpsr, r2
+@	MRS r2, cpsr
+@	ORR r2, #PSR_IRQ
+@	MSR cpsr, r2
 
 	@ restore spsr
  	LDR   r2, [sp, #56]

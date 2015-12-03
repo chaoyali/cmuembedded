@@ -14,7 +14,7 @@
 #include <sched.h>
 #include <device.h>
 #include <assert.h>
-
+#include <lock.h>
 
 extern void init_interrupt(void);
 extern void init_timer0(void);
@@ -50,7 +50,7 @@ int kmain(int argc __attribute__((unused)), char** argv  __attribute__((unused))
 	//initiate the interrupt and timer 0
 	init_interrupt();
 	init_timer0();
-	
+	mutex_init();
 	//load user program	
 	load_user(argc, argv);
 	myprintf();

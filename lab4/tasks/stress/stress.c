@@ -32,8 +32,10 @@ void fun1(void* str)
 		}
 		score[(int)str]++;
 		sleep((int)str);
+//		printf("sleep ok, %d, %d\n", (int)str, score[(int)str]);
 		if (event_wait((int)str) < 0)
 			panic("Dev 0 failed");
+//		printf("event_wait, %d\n", (int)str);
 	}
 }
 
@@ -83,8 +85,8 @@ int main(int argc, char** argv)
 	}
 	tasks[i].lambda = fun2;
 	tasks[i].data = (void*)i;
-  tasks[i].stack_pos = (void*)(0xa2000000 + 0x10000 * i);
-  tasks[i].C = 0;
+  	tasks[i].stack_pos = (void*)(0xa2000000 + 0x10000 * i);
+  	tasks[i].C = 0;
 	tasks[i].T = END_TIME;
 	task_create(tasks, NUM_TASK);
 	argc=argc; /* remove compiler warning */

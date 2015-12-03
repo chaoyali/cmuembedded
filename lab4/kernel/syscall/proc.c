@@ -19,6 +19,7 @@
 #include <arm/physmem.h>
 #include <device.h>
 
+/*sort the task by priority.*/
 void sort_tasks_by_prio(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
 	task_t temp;
@@ -37,27 +38,31 @@ void sort_tasks_by_prio(task_t* tasks  __attribute__((unused)), size_t num_tasks
 
 int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
-
+	/*check the number of task*/
 	if (num_tasks > OS_MAX_TASKS){
 		return -EINVAL;
 	}
+
+	/*check the validation of address.*/
 	if(!valid_addr(tasks, num_tasks, USR_START_ADDR, USR_END_ADDR)) {
         return -EFAULT;
     }
 	
-	mutex_init();
     dev_init();
 
+	/*using rate monotonic policy. So the task which high frequency will have high priority*/
+	/*We need to sort the task by their frequency*/
 	sort_tasks_by_prio(tasks, num_tasks);
 
 	allocate_tasks(&tasks, num_tasks);
-	//sched_init();
+
 	dispatch_nosave();
 	return 0;
 }
 
 int event_wait(unsigned int dev  __attribute__((unused)))
 {
+	if (dev >= NUM_DEVICES) return -EINVAL;
 	dev_wait(dev);
 	return 1; /* remove this line after adding your code */	
 }

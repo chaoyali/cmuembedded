@@ -28,12 +28,14 @@ void fun1(void* str)
 	while(1)
 	{	
 		if(flag == 0) {	
-			printf("Time is now %lu\n",time());
+//			printf("Time is now %lu\n",time());
 		}
 		score[(int)str]++;
 		sleep((int)str);
+		printf("sleep ok\n");
 		if (event_wait((int)str) < 0)
 			panic("Dev 0 failed");
+//		printf("event_wait\n");
 	}
 }
 

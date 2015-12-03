@@ -1,0 +1,23 @@
+/home/chaoya/Documents/18342/lab3/lab3/kernel/init_timer.o:  \
+ /home/chaoya/Documents/18342/lab3/lab3/kernel/init_timer.c \
+  /home/chaoya/Documents/18342/lab3/lab3/uboot/include/exports.h \
+  /home/chaoya/Documents/18342/lab3/lab3/kernel/include/types.h \
+  /home/chaoya/Documents/18342/lab3/lab3/kernel/include/stdarg.h \
+  /home/chaoya/Documents/18342/lab3/lab3/uboot/include/_exports.h \
+  /home/chaoya/Documents/18342/lab3/lab3/kernel/include/arm/reg.h \
+  /home/chaoya/Documents/18342/lab3/lab3/kernel/include/inline.h \
+  /home/chaoya/Documents/18342/lab3/lab3/kernel/include/arm/timer.h
+
+/home/chaoya/Documents/18342/lab3/lab3/uboot/include/exports.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/kernel/include/types.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/kernel/include/stdarg.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/uboot/include/_exports.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/kernel/include/arm/reg.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/kernel/include/inline.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/kernel/include/arm/timer.h:

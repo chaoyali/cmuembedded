@@ -39,8 +39,8 @@ int kmain(int argc, char* argv[], uint32_t table) {
 	install_handler((unsigned int*)0x18, (int)irq_handler, old_instr_irq_1, old_instr_irq_2);
 
 	//initiate the interrupt and timer 0
-//	init_interrupt();
-//	init_timer0();
+	init_interrupt();
+	init_timer0();
 	
 	//load user program	
 	exit_num = load_user(argc, argv);

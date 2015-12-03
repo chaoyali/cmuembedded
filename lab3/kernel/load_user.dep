@@ -1,0 +1,8 @@
+/home/chaoya/Documents/18342/lab3/lab3/kernel/load_user.o:  \
+ /home/chaoya/Documents/18342/lab3/lab3/kernel/load_user.S \
+  /home/chaoya/Documents/18342/lab3/lab3/kernel/include/bits/swi.h \
+  /home/chaoya/Documents/18342/lab3/lab3/kernel/include/config.h
+
+/home/chaoya/Documents/18342/lab3/lab3/kernel/include/bits/swi.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/kernel/include/config.h:

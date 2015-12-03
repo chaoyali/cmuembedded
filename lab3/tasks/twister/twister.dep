@@ -1,0 +1,26 @@
+/home/chaoya/Documents/18342/lab3/lab3/tasks/twister/twister.o:  \
+ /home/chaoya/Documents/18342/lab3/lab3/tasks/twister/twister.c \
+  /home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/stdio.h \
+  /home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/stdarg.h \
+  /home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/sys/types.h \
+  /home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/bits/types.h \
+  /home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/stdlib.h \
+  /home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/string.h \
+  /home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/ctype.h \
+  /home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/inline.h
+
+/home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/stdio.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/stdarg.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/sys/types.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/bits/types.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/stdlib.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/string.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/ctype.h:
+
+/home/chaoya/Documents/18342/lab3/lab3/tasks/libc/include/inline.h:

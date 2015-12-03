@@ -94,7 +94,7 @@ void dispatch_sleep(void)
 	 * add it into the runqueue
 	 */
 	uint8_t prio = highest_prio();
-//printf("sleep: %d\n", prio);
+
 	tcb_t *task = runqueue_remove(prio);
 	sched_context_t *cur_ctx = &(cur_tcb -> context);
 	cur_tcb = task;

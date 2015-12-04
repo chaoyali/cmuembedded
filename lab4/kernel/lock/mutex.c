@@ -137,13 +137,13 @@ int mutex_unlock(int mutex  __attribute__((unused)))
 	cur_mutex -> pHolding_Tcb = NULL;
 	cur_mutex -> bLock = FALSE;
 	tcb_t *new_tcb = cur_mutex -> pSleep_queue;
+	(cur_tcb -> holds_lock)--;
 	if (new_tcb != NULL) {
 		/* Wake up the first task in sleep queue */
 		runqueue_add(new_tcb, new_tcb -> cur_prio);
 		cur_mutex -> pSleep_queue = new_tcb -> sleep_queue;
 		new_tcb -> sleep_queue = NULL;
 	}
-	(cur_tcb -> holds_lock)--;
 	
 	enable_interrupts();
 	return 0; // fix this to return the correct value

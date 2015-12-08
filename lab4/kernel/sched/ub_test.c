@@ -13,6 +13,13 @@
 #include <exports.h>
 #endif
 
+const int big_U[64] = {
+1000,828,780,757,743,735,729,724,721,718,715,714,712,711,709,708,707,707,
+706,705,705,704,704,703,703,702,702,702,701,701,701,701,700,700,700,700,700,
+700,699,699,699,699,699,699,699,698,698,698,698,698,698,698,698,698,698,697,
+697,697,697,697,697,697,697,697};
+
+void sort(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)));
  
 /**
  * @brief Perform UB Test and reorder the task list.
@@ -29,9 +36,35 @@
  */
 int assign_schedule(task_t** tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
+	size_t i = 0;
+	double utilization = 0, uti_block = 0;
+	task_t* my_tasks = *tasks;
 
-	return 1; // fix this; dummy return to prevent compiler warnings	
+	sort(my_tasks, num_tasks);
+
+	for (i = 0; i < num_tasks; i++) {
+		utilization += my_tasks[i].C/my_tasks[i].T;
+		uti_block = utilization + my_tasks[i].B/my_tasks[i].T;
+		if ((int)uti_block*1000 > big_U[i])
+			return 0;
+	}
+	return 1;
 }
 	
-
+/*sort the task by priority.*/
+void sort(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
+{
+	task_t temp;
+	size_t i = 0;
+	size_t j = 0;
+	for (i = 0; i < num_tasks; i++) {
+		for (j = i+1; j < num_tasks; j++) {
+			if (tasks[i].T > tasks[j].T) {
+				temp = tasks[i];
+				tasks[i] = tasks[j];
+				tasks[j] = temp;
+			}
+		}	
+	}
+}
 

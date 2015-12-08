@@ -18,7 +18,7 @@ swi_handler:
 
 	@ enable IRQ
 	MRS   	r2, cpsr
-	AND   	r2, r2, #0xFFFFFF7F
+	AND   	r2, r2, #0xFFFFFF3F
 	MSR   	cpsr, r2
 
 	@ determine the SWI number called

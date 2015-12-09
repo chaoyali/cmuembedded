@@ -87,7 +87,6 @@ int mutex_lock(int mutex  __attribute__((unused)))
 		cur_mutex -> pHolding_Tcb = cur_tcb;
 		cur_mutex -> bLock = TRUE;
 		(cur_tcb -> holds_lock)++;
-		/* ??? Need to change the priority ? */
 	} else {	/* Add to the sleep queue */
 		tcb_t *sleep_tcb = cur_mutex -> pSleep_queue;
 		if (sleep_tcb == NULL) {
@@ -98,6 +97,10 @@ int mutex_lock(int mutex  __attribute__((unused)))
 			sleep_tcb -> sleep_queue = cur_tcb;
 		}
 		cur_tcb -> sleep_queue = NULL;
+		/* Part2 */
+		tcb_t *hold_tcb = cur_mutex -> pHolding_Tcb;
+		if (hold_tcb -> cur_prio > cur_tcb -> cur_prio)
+			hold_tcb -> cur_prio = cur_tcb -> cur_prio;
 		/* Context switch */
 		dispatch_sleep();
 		/* Obtain the lock */
@@ -144,7 +147,10 @@ int mutex_unlock(int mutex  __attribute__((unused)))
 		cur_mutex -> pSleep_queue = new_tcb -> sleep_queue;
 		new_tcb -> sleep_queue = NULL;
 	}
-	
+
+	/* Part2: Change the priority back if the task holds no lock */
+	if (cur_tcb -> holds_lock == 0) 
+		cur_tcb -> cur_prio = cur_tcb -> native_prio;
 	enable_interrupts();
 	return 0; // fix this to return the correct value
 }
